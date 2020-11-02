@@ -510,6 +510,14 @@ this.remove();
 };
 (document.head || document.documentElement).appendChild(s);
 
+var a = document.createElement("link");
+a.setAttribute("rel", "stylesheet"), a.setAttribute("href", chrome.extension.getURL("css/content.css")), document.head.appendChild(a);
+var b = document.createElement("link");
+b.setAttribute("rel", "stylesheet"), b.setAttribute("href", chrome.extension.getURL("css/font-awesome.min.css")), document.head.appendChild(b);
+var c = document.createElement("link");
+c.setAttribute("rel", "stylesheet"), c.setAttribute("href", chrome.extension.getURL("css/emoji.css")), document.head.appendChild(c)
+
+
 s = document.createElement('script');
 s.src = chrome.runtime.getURL('js/cropper.min.js');
 
@@ -519,9 +527,10 @@ this.remove();
 (document.head || document.documentElement).appendChild(s);
 
 
-
+/*
 var linkElement = this.document.createElement('link');
 linkElement.setAttribute('rel', 'stylesheet');
 linkElement.setAttribute('type', 'text/css');
 linkElement.setAttribute('href', chrome.runtime.getURL('js/inject/inject.css'));
 (document.head || document.documentElement).appendChild(linkElement);
+*/

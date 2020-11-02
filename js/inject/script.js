@@ -8,9 +8,19 @@ function(e) {
 
 
 
+console.log("injected because oh shit");
+document.body.addEventListener('click', (e) => {
+  setTimeout(()=>{
+    let list = document.querySelectorAll(".Igw0E.Xf6Yq.eGOV_._4EzTm");
+    [].forEach.call(list, (v) => {
+      Adjust(v)
+    })
 
-document.body.addEventListener('click', function (e) {
-  //console.log(e);
+
+    
+  },400);
+  
+  console.log(e);
   if (e.target.nodeName === 'IMG' && e.target.parentNode.classList.contains("QzzMF") && !e.target.className.includes("viewer")) {
     // viewer.show(e.target.src.replace('.jpg', '-big.jpg'))
     new Viewer(e.target, {
@@ -26,25 +36,32 @@ document.body.addEventListener('click', function (e) {
 })
 
 var mutationObserver = new MutationObserver(function (mutations) {
-  window.location.href.indexOf("direct/t/")
-  mutations.forEach(function (mutation) {
-    if (mutation.addedNodes.length > 0) {
-
-      Adjust(mutation.addedNodes.item(0));
-      if (mutation.target.tagName == "SECTION") {
-        console.log("SECTION");
-        setTimeout(() => {
-          let pre_rendered = mutation.target.children[1].children[0].children[0].children[0].children[0].children[0].children;
-          [].forEach.call(pre_rendered, (v) => {
-            Adjust(v)
-          })
-          //console.log(pre_rendered);
-        }, 1);
-
+  if (window.location.href.indexOf("direct/t/") != -1){
+    mutations.forEach(function (mutation) {
+      if (mutation.addedNodes.length > 0 && mutation.type == "childList") {
+        console.log(mutation)
+        Adjust(mutation.addedNodes.item(0));
+        if (mutation.target.tagName == "SECTION") {
+          console.log("SECTION");
+          setTimeout(() => {
+            let pre_rendered = mutation.target.children[1].children[0].children[0].children[0].children[0].children[0].children;
+            [].forEach.call(pre_rendered, (v) => {
+              Adjust(v)
+            })
+            //console.log(pre_rendered);
+          }, 1);
+  
+        }
       }
-    }
-  });
+    });
+  }
+  
 });
+
+
+
+
+
 window.addEventListener('hashchange', function (e) { alert('url changed') });
 
 mutationObserver.observe(document.querySelector("#react-root"), {
@@ -70,8 +87,6 @@ window.Adjust = function (dom) {
 }
 
 window.TypeCheck = function (props, dom) {
-
-
   //check for vocals
   try {
     let message = props.props.children[1].props.children[1]._owner.memoizedState.itemWithError;
@@ -247,7 +262,8 @@ window.ElaborateDom = function (dom, message) {
           console.log(dom);
           try {
             url = message.message.raven_media.image_versions2.candidates[0].url;
-            dom.querySelector(".z1VUo").remove();
+            dom.querySelector("._7UhW9.PIoXz.MMzan._0PwGv.p1tLr.hjZTB").remove();
+
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").innerHTML = "▶️ Photo";
             img = document.createElement("img");
             img.setAttribute("src", url);
@@ -265,7 +281,7 @@ window.ElaborateDom = function (dom, message) {
             dom.querySelector(".iXTil").classList.add("pointable");
             dom.querySelector(".iXTil > div > div > div").style.marginBottom = "0px";
           }catch(e){
-            dom.querySelector(".z1VUo").remove();
+            dom.querySelector("._7UhW9.PIoXz.MMzan._0PwGv.p1tLr.hjZTB").remove();
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").innerHTML = "▶️ Expired";
             dom.querySelector(".iXTil").classList.add("pointable");
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").style.opacity = 0.7;
@@ -277,7 +293,7 @@ window.ElaborateDom = function (dom, message) {
           try {
 
             url = message.message.raven_media.video_versions[0].url;
-            dom.querySelector(".z1VUo").remove();
+            dom.querySelector("._7UhW9.PIoXz.MMzan._0PwGv.p1tLr.hjZTB").remove();
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").innerHTML = "▶️ Video";
             img = document.createElement("video");
             img.setAttribute("src", url);
@@ -301,7 +317,7 @@ window.ElaborateDom = function (dom, message) {
             dom.querySelector(".iXTil").classList.add("pointable");
             dom.querySelector(".iXTil > div > div > div").style.marginBottom = "0px";
           }catch(e){
-            dom.querySelector(".z1VUo").remove();
+            dom.querySelector("._7UhW9.PIoXz.MMzan._0PwGv.p1tLr.hjZTB").remove();
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").innerHTML = "▶️ Expired";
             dom.querySelector(".iXTil").classList.add("pointable");
             dom.querySelector("._7UhW9.PIoXz.MMzan.KV-D4.uL8Hv").style.opacity = 0.7;
