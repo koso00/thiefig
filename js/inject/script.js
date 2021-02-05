@@ -9,15 +9,10 @@ function(e) {
 
 
 console.log("injected because oh shit");
-document.body.addEventListener('click', (e) => {
+document.querySelector("#react-root > section > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > div.oNO81 > div.Igw0E.IwRSH.eGOV_._4EzTm.i0EQd").addEventListener('click', (e) => {
   setTimeout(()=>{
-    let list = document.querySelectorAll(".Igw0E.Xf6Yq.eGOV_._4EzTm");
-    [].forEach.call(list, (v) => {
-      Adjust(v)
-    })
-
-
-    
+    document.querySelectorAll("#react-root > section > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > div.DPiy6.Igw0E.IwRSH.eGOV_.vwCYk > div.uueGX > div > div.Igw0E.IwRSH.hLiUi.vwCYk > div > div > div:not([adjusted])")
+    .forEach((v)=>{Adjust(v)})
   },400);
   
   console.log(e);
@@ -39,15 +34,13 @@ var mutationObserver = new MutationObserver(function (mutations) {
   if (window.location.href.indexOf("direct/t/") != -1){
     mutations.forEach(function (mutation) {
       if (mutation.addedNodes.length > 0 && mutation.type == "childList") {
-        console.log(mutation)
+        //console.log(mutation)
         Adjust(mutation.addedNodes.item(0));
         if (mutation.target.tagName == "SECTION") {
           console.log("SECTION");
           setTimeout(() => {
-            let pre_rendered = mutation.target.children[1].children[0].children[0].children[0].children[0].children[0].children;
-            [].forEach.call(pre_rendered, (v) => {
-              Adjust(v)
-            })
+            document.querySelectorAll("#react-root > section > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > div.DPiy6.Igw0E.IwRSH.eGOV_.vwCYk > div.uueGX > div > div.Igw0E.IwRSH.hLiUi.vwCYk > div > div > div:not([adjusted])")
+            .forEach((v)=>{Adjust(v)})
             //console.log(pre_rendered);
           }, 1);
   
@@ -74,6 +67,7 @@ mutationObserver.observe(document.querySelector("#react-root"), {
 });
 
 window.Adjust = function (dom) {
+  dom.setAttribute("adjusted",true)
   //console.log(dom);
   let react = FindReact(dom);
   if (react == null) { return }
@@ -150,13 +144,13 @@ window.TypeCheck = function (props, dom) {
   } catch (_) { }
   try {
 
-    document.querySelector("#react-root > section > div.IEL5I > div > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > button:nth-child(2)")
+    document.querySelector("#react-root > section > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > div.DPiy6.Igw0E.IwRSH.eGOV_.vwCYk > div.uueGX > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > button:nth-child(3)")
             .onclick = (event)=>{
               event.preventDefault();
               event.stopImmediatePropagation();
               event.stopPropagation();
 
-              let input = document.querySelector("#react-root > section > div.IEL5I > div > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > form > input")
+              let input = document.querySelector("#react-root > section > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > div.DPiy6.Igw0E.IwRSH.eGOV_.vwCYk > div.uueGX > div > div.Igw0E.IwRSH.eGOV_._4EzTm > div > div > form > input")
                                   .cloneNode(true);
               input.click();
               input.onchange = ()=>{
